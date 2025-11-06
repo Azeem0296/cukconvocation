@@ -124,7 +124,7 @@ const YourTicketPage: React.FC = () => {
             const doc = new jsPDF({
                 orientation: "portrait",
                 unit: "mm",
-                format: [120, 220],
+                format: [120, 225],
             });
 
             const pageWidth = doc.internal.pageSize.getWidth();
@@ -204,7 +204,7 @@ const YourTicketPage: React.FC = () => {
             doc.setFont("helvetica", "normal");
             doc.setFontSize(8);
             const infoText =
-                "Please present this ticket at the entrance for verification. Keep your QR code visible.";
+                "Please present this ticket at the entrance for verification. \nKeep your QR code visible.";
             const infoSplit = doc.splitTextToSize(infoText, pageWidth - 16);
             doc.text(infoSplit, pageWidth / 2, qrY + qrSize + 30, { align: "center" });
 
@@ -225,7 +225,7 @@ const YourTicketPage: React.FC = () => {
             infoY += 4;
             const boxMargin = 8;
             const boxWidth = pageWidth - boxMargin * 2;
-            const boxHeight = 45;
+            const boxHeight = 48;
             doc.setDrawColor(200);
             doc.setLineWidth(0.3);
             doc.roundedRect(boxMargin, infoY, boxWidth, boxHeight, 3, 3);
@@ -236,11 +236,11 @@ const YourTicketPage: React.FC = () => {
             doc.setFontSize(9);
 
             const scanningInstructions = [
-                "• The Dress code of the recipients will be ‘White Pant and White Top’ for both ladies and gents (Pajama, Kurta, Shirt, Mundu, Pant, Churidar, Saree, etc.",
+                "• The Dress code of the recipients will be ‘White Pant and White Top’ for both ladies and gents (Pajama, Kurta, Shirt, Mundu, Pant, Churidar, Saree, etc.)",
                 "• The recipients must collect their food coupons from the entry point.",
                 "• Collection of the convocation shawl from the Convocation venue.",
-                "• Students must be seated in the venue by 10.00 AM",
-                "• Collection of the convocation shawl from the Convocation venue."
+                "• Students must be seated in the venue by 10 AM.",
+                "• Shuttle services will be available from Payaswini Hall to the Convocation venue."
             ];
 
             let textY = infoY;

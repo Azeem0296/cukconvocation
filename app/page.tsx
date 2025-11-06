@@ -144,7 +144,7 @@ const LoginPageClient: React.FC = () => {
             <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
             <span>
               Recipients should complete their registration on or before{" "}
-              <strong>10 November 2025, Monday by 02.00 PM.</strong>
+              <strong>10 November 2025, Monday by 02:00 PM.</strong>
             </span>
           </li>
         </ul>
