@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import Picker from "react-mobile-picker";
 
-
 const Spinner = () => (
   <span className="flex items-center justify-center">
     <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -18,7 +17,8 @@ type FormMessage = { text: string; isSuccess: boolean } | null;
 const RegistrationPage: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [department, setDepartment] = useState('');
+  const [program, setProgram] = useState('');
+  const [passingYear, setPassingYear] = useState('');
   const [rollNumber, setRollNumber] = useState('');
 
   const [guests, setGuests] = useState<number | null>(null);
@@ -36,7 +36,6 @@ const RegistrationPage: React.FC = () => {
 
   const [showPicker, setShowPicker] = useState(false);
   const [tempGuests, setTempGuests] = useState<string>(String(guests ?? ""));
-
 
   const router = useRouter();
 
@@ -62,10 +61,12 @@ const RegistrationPage: React.FC = () => {
         const profile = await res.json();
         if (!res.ok) throw new Error(profile?.error || 'Failed to fetch profile');
 
+        // ✅ Map backend fields
         setFullName(profile?.name ?? '');
         setEmail(profile?.email ?? '');
         setRollNumber(profile?.roll_no ?? '');
-        setDepartment(profile?.dept ?? '');
+        setProgram(profile?.programme ?? ''); // <— Added
+        setPassingYear(profile?.year_of_passing ?? ''); // <— Added
 
         if (profile?.is_registered) {
           setIsAlreadyRegistered(true);
@@ -175,7 +176,6 @@ const RegistrationPage: React.FC = () => {
       <div className="absolute inset-0 bg-black/50"></div>
 
       <div className="relative z-10 w-full max-w-lg p-6 sm:p-10 bg-black/30 backdrop-blur-lg rounded-xl shadow-xl border border-white/20">
-
         <div className="text-center mb-8">
           <img src="/cuk-logo.png" alt="CUK" className="mx-auto mb-4 w-20 h-20 rounded-full" />
           <h1 className="text-2xl sm:text-3xl font-bold text-white">Central University of Kerala</h1>
@@ -187,7 +187,8 @@ const RegistrationPage: React.FC = () => {
             <div className="space-y-5">
               {[
                 { label: 'Full Name', value: fullName },
-                { label: 'Department', value: department },
+                { label: 'Programme', value: program },
+                { label: 'Year of Passing', value: passingYear },
                 { label: 'Email', value: email },
                 { label: 'Roll Number', value: rollNumber }
               ].map(({ label, value }) => (
@@ -203,11 +204,9 @@ const RegistrationPage: React.FC = () => {
               ))}
 
               {/* Guests dropdown */}
-              {/* Guests */}
               <div>
                 <label className="block text-sm text-gray-200 mb-1">Number of Guests (Max 2)</label>
 
-                {/* iOS Picker Trigger */}
                 <button
                   type="button"
                   disabled={isAlreadyRegistered}
@@ -223,8 +222,7 @@ const RegistrationPage: React.FC = () => {
               {/* iOS Picker Modal */}
               {showPicker && (
                 <div className="fixed inset-0 z-50 flex items-end bg-black/50 backdrop-blur-sm">
-                  {/* Bottom Sheet */}
-                  <div className="w-full bg-[#0f172a] text-white rounded-t-2xl rounded-b-2xl overflow-hidden shadow-xl pb-8 ios-safe-area">
+                  <div className="w-full bg-[#0f172a] text-white rounded-t-2xl overflow-hidden shadow-xl pb-8 ios-safe-area">
                     <div className="flex justify-between items-center p-4">
                       <button
                         onClick={() => setShowPicker(false)}
@@ -247,7 +245,7 @@ const RegistrationPage: React.FC = () => {
                     <Picker
                       value={{ guests: tempGuests }}
                       onChange={(v) => setTempGuests(v.guests)}
-                      height={200} // smooth iOS height
+                      height={200}
                     >
                       <Picker.Column name="guests">
                         <Picker.Item value="" disabled>Select</Picker.Item>
@@ -259,8 +257,6 @@ const RegistrationPage: React.FC = () => {
                   </div>
                 </div>
               )}
-
-
 
               {/* Guardian Names */}
               {guests! > 0 && (
