@@ -16,6 +16,9 @@ const YourTicketPage: React.FC = () => {
     const [studentName, setStudentName] = useState('');
     const [studentEmail, setStudentEmail] = useState(''); // Store email for PDF
     const [studentRollNo, setStudentRollNo] = useState(''); // Store roll no for PDF
+    const [program, setProgram] = useState('');
+    const [passingYear, setPassingYear] = useState('');
+
     const [guestOne, setGuestOne] = useState(''); // Store roll no for PDF
     const [guestTwo, setGuestTwo] = useState(''); // Store roll no for PDF
     const [passId, setPassId] = useState<string | null>(null); // Store passId if needed later
@@ -109,6 +112,9 @@ const YourTicketPage: React.FC = () => {
                     setGuestTwo(qrData.guest_2_name);
                     setStudentEmail(qrData.email); // Store for PDF
                     setStudentRollNo(qrData.roll_no); // Store for PDF
+                    setProgram(qrData.programme || '');
+                    setPassingYear(qrData.year_of_passing || '');
+
                     setQrSvgString(qrData.qrSvgString); // Store the SVG STRING
 
                 } else {
@@ -143,7 +149,7 @@ const YourTicketPage: React.FC = () => {
             const doc = new jsPDF({
                 orientation: "portrait",
                 unit: "mm",
-                format: [100, 166.6], // width, height
+                format: [100, 175], // width, height
             });
 
             const pageWidth = doc.internal.pageSize.getWidth();
@@ -232,32 +238,34 @@ const YourTicketPage: React.FC = () => {
             doc.setFontSize(10);
 
             // --- Dynamic Text Positioning ---
-            // --- Dynamic Text Positioning (Improved UI) ---
+            // --- TICKET HOLDER DETAILS (clean layout) ---
             let currentY = whiteTop + 20;
-            const titleMargin = 6;
             const lineSpacing = 6;
-            const leftMargin = 8;
-            const labelWidth = 24; // space for labels
+            const leftMargin = 10;
+            const labelWidth = 30; // spacing between label and value
 
-            const drawDetail = (label: string, value: string) => {
+            const drawDetail = (label: string, value: any) => {
                 doc.setFont("helvetica", "bold");
                 doc.text(`${label}:`, leftMargin, currentY);
 
                 doc.setFont("helvetica", "normal");
-                doc.text(value || "-", leftMargin + labelWidth, currentY);
+                doc.text(String(value || "-"), leftMargin + labelWidth, currentY);
 
                 currentY += lineSpacing;
             };
 
-            // Student Details
-            drawDetail("Student", studentName);
-            drawDetail("Email", studentEmail);
-            drawDetail("Roll No", studentRollNo);
 
-            // Guests (only if exist)
+            // --- Show all required fields ---
+            drawDetail("Student", studentName);
+            drawDetail("Roll No", studentRollNo);
+            drawDetail("Programme", program);
+            drawDetail("Year of Passing", passingYear);
+            drawDetail("Email", studentEmail);
+            
+
             if (guestOne) drawDetail("Guest 1", guestOne);
             if (guestTwo) drawDetail("Guest 2", guestTwo);
-            // --- End Dynamic Text Positioning ---
+
 
             // --- End Dynamic Text Positioning ---
 
