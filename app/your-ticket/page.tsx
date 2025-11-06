@@ -124,7 +124,7 @@ const YourTicketPage: React.FC = () => {
             const doc = new jsPDF({
                 orientation: "portrait",
                 unit: "mm",
-                format: [120, 215],
+                format: [120, 220],
             });
 
             const pageWidth = doc.internal.pageSize.getWidth();
@@ -169,16 +169,29 @@ const YourTicketPage: React.FC = () => {
             });
 
             // ----- Place QR -----
+            // ----- Place Rounded QR -----
             const qrSize = 55;
             const qrX = (pageWidth - qrSize) / 2;
             const qrY = 10;
+            const cornerRadius = 5; // adjust for more/less rounding
+
+            // Draw rounded background behind the QR
+            doc.setFillColor(255, 255, 255);
+            doc.roundedRect(qrX - 2, qrY - 2, qrSize + 4, qrSize + 4, cornerRadius, cornerRadius, "F");
+
+            // Place QR on top (slightly smaller to keep the illusion of rounded corners)
             doc.addImage(pngDataUrl, "PNG", qrX, qrY, qrSize, qrSize);
+
+            // Overlay white corners for smoother masking illusion
+            doc.setDrawColor(255, 255, 255);
+            doc.setLineWidth(1);
+            doc.roundedRect(qrX, qrY, qrSize, qrSize, cornerRadius, cornerRadius);
 
             // ----- Text: SCAN HERE -----
             doc.setFont("helvetica", "bold");
             doc.setFontSize(9);
             doc.setTextColor(255, 255, 255);
-            doc.text("SCAN HERE!", pageWidth / 2, qrY + qrSize + 5, { align: "center" });
+            doc.text("SCAN HERE!", pageWidth / 2, qrY + qrSize + 6, { align: "center" });
 
             // ----- Event Name -----
             doc.setFontSize(14);
@@ -206,13 +219,13 @@ const YourTicketPage: React.FC = () => {
             doc.setTextColor(0, 0, 0);
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.text("ENTRY AND SCANNING DETAILS", pageWidth / 2, infoY, { align: "center" });
+            doc.text("GENERAL INSTRUCTIONS:", pageWidth / 2, infoY, { align: "center" });
 
             // Draw a light grey rounded box around the instructions
             infoY += 4;
             const boxMargin = 8;
             const boxWidth = pageWidth - boxMargin * 2;
-            const boxHeight = 35;
+            const boxHeight = 45;
             doc.setDrawColor(200);
             doc.setLineWidth(0.3);
             doc.roundedRect(boxMargin, infoY, boxWidth, boxHeight, 3, 3);
@@ -223,9 +236,11 @@ const YourTicketPage: React.FC = () => {
             doc.setFontSize(9);
 
             const scanningInstructions = [
-                "• The first scanning point will be at Payaswini, where 10 volunteers will be deployed for verification.",
-                "• The second scanning point will be at the Pandal (main event venue).",
-                "• Only those who have successfully completed the first scanning at Payaswini will be permitted for second scanning at the Pandal."
+                "• The Dress code of the recipients will be ‘White Pant and White Top’ for both ladies and gents (Pajama, Kurta, Shirt, Mundu, Pant, Churidar, Saree, etc.",
+                "• The recipients must collect their food coupons from the entry point.",
+                "• Collection of the convocation shawl from the Convocation venue.",
+                "• Students must be seated in the venue by 10.00 AM",
+                "• Collection of the convocation shawl from the Convocation venue."
             ];
 
             let textY = infoY;
@@ -270,7 +285,7 @@ const YourTicketPage: React.FC = () => {
             // ----- Footer -----
             doc.setFontSize(8);
             doc.setTextColor(120);
-            doc.text("CUK Convocation Ticket - 2025", pageWidth / 2, pageHeight - 4, { align: "center" });
+            doc.text("CUK Convocation Ticket - 2025", pageWidth / 2, pageHeight - 2, { align: "center" });
 
             // ----- Save PDF -----
             doc.save(`CUK_Convocation_Ticket_${studentRollNo}.pdf`);

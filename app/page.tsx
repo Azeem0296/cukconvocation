@@ -86,83 +86,83 @@ const LoginPageClient: React.FC = () => {
       <div className="absolute inset-0 bg-black/50"></div>
 
       {/* MODAL (Instructions) */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0 overflow-y-auto">
-          {/* Background overlay */}
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm"></div>
+{showModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0 overflow-y-auto">
+    {/* Background overlay */}
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm"></div>
 
-          {/* Modal container */}
-          <div className="relative z-10 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl w-full max-w-lg mx-auto my-8 sm:my-10 p-6 sm:p-8 text-white overflow-y-auto max-h-[90vh]">
-            {/* Title */}
-            <h2 className="text-xl sm:text-2xl font-extrabold text-blue-400 mb-5 text-center drop-shadow-md">
-              Student Registration Process
-            </h2>
+    {/* Modal container */}
+    <div className="relative z-10 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl w-full max-w-lg mx-auto my-8 sm:my-10 p-6 sm:p-8 text-white overflow-y-auto max-h-[90vh]">
+      {/* Title */}
+      <h2 className="text-xl sm:text-2xl font-extrabold text-blue-400 mb-5 text-center drop-shadow-md">
+        Recipients Registration Process:
+      </h2>
 
-            {/* Instructions */}
-            <div className="relative border-l-4 border-blue-400 pl-4">
-              <ul
-                className="list-none text-sm sm:text-base leading-relaxed space-y-3 tracking-wide"
-                style={{
-                  textAlign: "justify",
-                  textJustify: "inter-word",
-                  hyphens: "auto",
-                  wordSpacing: "0.08em",
-                  lineHeight: "1.6",
-                }}
-              >
-                <li className="flex items-start">
-                  <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
-                  <span>
-                    Students must register using their registered e-mail ID.
-                  </span>
-                </li>
+      {/* Instructions */}
+      <div className="relative border-l-4 border-blue-400 pl-4">
+        <ul className="list-none text-sm sm:text-base leading-relaxed space-y-3 tracking-normal text-left">
+          <li className="flex items-start">
+            <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
+            <span>
+              Recipients must register using the IX<sup>th</sup> Convocation registered e-mail ID.
+            </span>
+          </li>
 
-                <li className="flex items-start">
-                  <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
-                  <span>
-                    All fields fetched from the database will be read-only and disabled.
-                  </span>
-                </li>
+          <li className="flex items-start">
+            <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
+            <span>
+              All fields fetched from the database will be read-only and disabled.
+            </span>
+          </li>
 
-                <li className="flex items-start">
-                  <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
-                  <span>
-                    Students are required to enter the number of accompanying parents and their names.
-                    <br />
-                    <span className="text-blue-100 italic">
-                      (Parents must carry a valid ID card for entry.)
-                    </span>
-                  </span>
-                </li>
+          <li className="flex items-start">
+            <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
+            <span>
+              Recipients are required to enter the number of accompanying parents/guardian and their names.
+              <br />
+              <span className="text-blue-100 italic">
+                (Parents/guardian must carry a valid ID card for entry.)
+              </span>
+            </span>
+          </li>
 
-                <li className="flex items-start">
-                  <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
-                  <span>
-                    Upon successful registration, a QR code and PDF ticket will be generated.
-                  </span>
-                </li>
+          <li className="flex items-start">
+            <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
+            <span>
+              Upon successful registration, a QR code with PDF ticket will be generated.
+            </span>
+          </li>
 
-                <li className="flex items-start">
-                  <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
-                  <span>
-                    Carrying a soft or hard copy of the ticket is mandatory for entry into the campus and the event.
-                  </span>
-                </li>
-              </ul>
-            </div>
+          <li className="flex items-start">
+            <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
+            <span>
+              Carrying a soft or hard copy of the ticket is mandatory for entry into the campus and the convocation venue.
+            </span>
+          </li>
 
-            {/* Button */}
-            <div className="flex justify-center mt-7">
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-800 text-white font-semibold px-8 py-2.5 rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
-              >
-                Got It
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <li className="flex items-start">
+            <span className="text-blue-300 font-semibold mr-2 select-none">•</span>
+            <span>
+              Recipients should complete their registration on or before{" "}
+              <strong>10 November 2025, Monday by 02.00 PM.</strong>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Button */}
+      <div className="flex justify-center mt-7">
+        <button
+          onClick={() => setShowModal(false)}
+          className="bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-800 text-white font-semibold px-8 py-2.5 rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+        >
+          Got It
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
 
 
